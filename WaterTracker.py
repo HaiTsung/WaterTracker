@@ -16,7 +16,7 @@ weekdays = ["Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat.", "Sun."]
 root = ctk.CTk()
 root.geometry("600x400")
 root.title("Water today.")
-root.configure(fg_color="#07172D")
+root.configure(fg_color="#030C16")
 root.resizable(False, False)
 
 
@@ -57,14 +57,14 @@ def updateUserInterface():
     ml.configure(text=f"or {waterToday * 250}ml from 2000ml.")
 
 plusButton = ctk.CTkButton(root, text="+1.", width=82, font=amountFont, fg_color="transparent", command=addWater,
-                           hover_color="#07172D")
+                           hover_color="#030C16")
 plusButton.place(x=293, y=167)
 
 buttonSectionLine = ctk.CTkFrame(root, height=45, width=1, bg_color="white")
 buttonSectionLine.place(x=398, y=167)
 
 minusButton = ctk.CTkButton(root, text="-1.", width=82, font=amountFont, fg_color="transparent", command=removeWater,
-                            hover_color="#07172D")
+                            hover_color="#030C16")
 minusButton.place(x=413, y=167)
 
 ml = ctk.CTkLabel(root, text="or 0ml from 2000ml.", text_color="#93C4FF", width=215, font=mlFont)
