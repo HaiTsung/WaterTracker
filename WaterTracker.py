@@ -1,5 +1,19 @@
 from winotify import *
 import customtkinter as ctk
+import datetime
+import json
+import os
+
+if os.path.exists("drinkData.json"):
+    data = open("drinkData.json", "r")
+    data = json.load(data)
+    history = [DrinkDay.fromJson(d) for d in data]
+else:
+    data = open("drinkData.json", "x")
+    history = []
+
+now = datetime.datetime.now()
+print(now.date())
 
 water = Notification(app_id="Water Tracker", msg="Drink Water Now", title="Drink Water Now", icon=r"C:\Users\morte\Desktop\Python\PythonProject1\ressources\waterDrop.png")
 water.add_actions(label="Remind in 5 min",
@@ -8,6 +22,8 @@ water.add_actions(label="Done!",
                   launch="https://github.com/versa-syahptr/winotify/")
 
 #water.show()
+
+
 
 waterToday = 0
 
@@ -19,6 +35,19 @@ root.title("Water today.")
 root.configure(fg_color="#030C16")
 root.resizable(False, False)
 
+
+class DrinkDay():
+    def __init__(self, glasses:int, day:datetime.date):
+        self.glasses = glasses
+        self.day = day
+    def toJson(self):
+        return {'glasses': self.glasses, 'date': self.day.isoformat()}
+    @staticmethod
+    def fromJson(data):
+        return DrinkDay(
+            glasses=data['glasses'],
+            day=datetime.date.fromisoformat(data['date'])
+        )
 
 
 titleFont = ctk.CTkFont(family="Times New Roman", size=64)
@@ -43,14 +72,19 @@ counterSectionLine.place(x=337, y=109)
 def addWater():
     global waterToday
     waterToday += 1
+    writeData()
     updateUserInterface()
 
 def removeWater():
     global waterToday
     if waterToday != 0:
         waterToday -= 1
+        writeData()
         updateUserInterface()
 
+def writeData():
+    f = open('drinkData.json', 'w')
+    json.dump([d.toJson() for d in history], f)
 
 def updateUserInterface():
     glasses.configure(text=f"{waterToday} / 8 glasses.")
@@ -78,14 +112,17 @@ sectionLine.place(x=27, y=248)
 for i in range(5):
     day = ctk.CTkLabel(historyFrame, text=weekdays[i], text_color="white", font=historyFont, width=68)
     day.grid(row=0, column=i, padx=(0,52), pady=0)
-    dayData = ctk.CTkLabel(historyFrame, text="4/8\ngls.", text_color="#93C4FF", font=historyFont, width=68)
+    dayData = ctk.CTkLabel(historyFrame, text=f"/8\ngls.", text_color="#93C4FF", font=historyFont, width=68)
     dayData.grid(row=1, column=i, padx=(0,52), pady=8)
 
+while True:
+    
+    if now != datetime.datetime.now():
+        history.append(DrinkDay(waterToday, now))
+        waterToday = 0
+    now = datetime.datetime.now()
+    root.update()
 
-
-
-
-root.mainloop()
 
 
 #def updateInterface():
