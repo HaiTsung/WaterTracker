@@ -72,14 +72,12 @@ counterSectionLine.place(x=337, y=109)
 def addWater():
     global waterToday
     waterToday += 1
-    writeData()
     updateUserInterface()
 
 def removeWater():
     global waterToday
     if waterToday != 0:
         waterToday -= 1
-        writeData()
         updateUserInterface()
 
 def writeData():
