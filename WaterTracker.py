@@ -3,6 +3,7 @@ import customtkinter as ctk
 import datetime
 import json
 import os
+import sys
 
 if os.path.exists("drinkData.json"):
     data = open("drinkData.json", "r")
@@ -106,6 +107,14 @@ historyTitle = ctk.CTkLabel(root, text="last 5 days.", text_color="white", font=
 historyTitle.place(x=27, y=212)
 sectionLine = ctk.CTkFrame(root, height=1, bg_color="white", width=546)
 sectionLine.place(x=27, y=248)
+
+def exitTracker():
+    writeData()
+    sys.exit()
+
+exitButton = ctk.CTkButton(root, text="exit.", width=53, font=mlFont, fg_color="transparent", command=exitTracker,
+                            hover_color="#030C16")
+exitButton.place(x=529, y=12)
 
 for i in range(5):
     day = ctk.CTkLabel(historyFrame, text=weekdays[i], text_color="white", font=historyFont, width=68)
