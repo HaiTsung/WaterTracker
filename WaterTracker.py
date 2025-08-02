@@ -22,8 +22,6 @@ water.add_actions(label="Remind in 5 min",
 water.add_actions(label="Done!",
                   launch="https://github.com/versa-syahptr/winotify/")
 
-#water.show()
-
 
 
 waterToday = 0
